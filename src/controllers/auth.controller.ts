@@ -8,9 +8,18 @@ export class AuthController {
     this.authService = new AuthService();
   }
 
-  register = async ({ body }: Request, res: Response, next: NextFunction) => {
+  register = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userToken = await this.authService.register(body);
+      const userToken = await this.authService.register(req.body);
+      return res.status(200).json(userToken);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  login = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userToken = await this.authService.login(req.body);
       return res.status(200).json(userToken);
     } catch (error) {
       next(error);

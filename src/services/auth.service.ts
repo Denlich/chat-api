@@ -5,6 +5,9 @@ import { JwtLocalService } from "./jwt.local.service.js";
 import { AlreadyRegisteredException } from "../utils/exceptions/already-registered.exception.js";
 import { JwtPayload } from "../security/jwt.payload.js";
 import { User } from "@prisma/client";
+import { UnauthorizedException } from "../utils/exceptions/unauthorized.exception.js";
+import { InvalidEntityIdException } from "../utils/exceptions/invalid-entity-id.exception.js";
+import { LoginDto } from "../dtos/login.dto.js";
 
 export class AuthService {
   private jwtLocalService: JwtLocalService;
@@ -12,6 +15,24 @@ export class AuthService {
   constructor() {
     this.jwtLocalService = new JwtLocalService();
   }
+
+  validateUser = async (username: string, password: string) => {
+    const user = await prisma.user.findFirst({
+      where: {
+        OR: [{ email: username }, { username: username }],
+      },
+    });
+    if (!user) {
+      throw new InvalidEntityIdException("User");
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      throw new UnauthorizedException("The password is incorrect");
+    }
+
+    return user;
+  };
 
   register = async (user: UserDto) => {
     if (await this.checkIfUserExists(user)) {
@@ -26,6 +47,12 @@ export class AuthService {
     const newUser = await this.trulyRegister(tokenBody);
 
     return this.getAccessToken(newUser);
+  };
+
+  login = async (user: LoginDto) => {
+    const userFromDb = await this.validateUser(user.username, user.password);
+
+    return this.getAccessToken(userFromDb);
   };
 
   getAccessToken = (user: User) => {
