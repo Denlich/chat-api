@@ -45,19 +45,24 @@ export class AuthService {
     };
 
     const newUser = await this.trulyRegister(tokenBody);
+    const payload = this.createPayload(newUser);
 
-    return this.getAccessToken(newUser);
+    return this.getAccessToken(payload);
   };
 
   login = async (user: LoginDto) => {
     const userFromDb = await this.validateUser(user.username, user.password);
+    const payload = this.createPayload(userFromDb);
 
-    return this.getAccessToken(userFromDb);
+    return this.getAccessToken(payload);
   };
 
-  getAccessToken = (user: User) => {
+  refresh = async (user: User) => {
     const payload = this.createPayload(user);
+    return this.getAccessToken(payload);
+  };
 
+  getAccessToken = (payload: JwtPayload) => {
     return {
       accessToken: this.jwtLocalService.generateToken(payload),
     };
