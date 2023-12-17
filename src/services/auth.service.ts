@@ -8,19 +8,20 @@ import { User } from "@prisma/client";
 import { UnauthorizedException } from "../utils/exceptions/unauthorized.exception.js";
 import { InvalidEntityIdException } from "../utils/exceptions/invalid-entity-id.exception.js";
 import { LoginDto } from "../dtos/login.dto.js";
+import { UserRepository } from "../repositories/user.repository.js";
 
 export class AuthService {
   private jwtLocalService: JwtLocalService;
+  private userRepository: UserRepository;
 
   constructor() {
     this.jwtLocalService = new JwtLocalService();
+    this.userRepository = new UserRepository();
   }
 
   validateUser = async (username: string, password: string) => {
-    const user = await prisma.user.findFirst({
-      where: {
-        OR: [{ email: username }, { username: username }],
-      },
+    const user = await this.userRepository.find({
+      OR: [{ email: username }, { username: username }],
     });
     if (!user) {
       throw new InvalidEntityIdException("User");
@@ -69,10 +70,8 @@ export class AuthService {
   };
 
   checkIfUserExists = async (query: { email?: string; username?: string }) => {
-    const user = await prisma.user.findFirst({
-      where: {
-        OR: [{ email: query.email }, { username: query.username }],
-      },
+    const user = await this.userRepository.find({
+      OR: [{ email: query.email }, { username: query.username }],
     });
     return !!user?.password;
   };
