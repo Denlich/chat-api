@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { prisma } from "../utils/prisma.server.js";
+import { prisma } from "@/utils/prisma.server.js";
 
 export class UserRepository {
   async findById(id: string) {

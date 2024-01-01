@@ -1,10 +1,11 @@
+import cors from "cors";
+import "dotenv/config.js";
 import express from "express";
 import { createServer } from "node:http";
-import "dotenv/config.js";
-import cors from "cors";
-import router from "./routes/router.routes.js";
-import { errorHandler } from "./middlewares/error.handler.js";
-import Socket from "./socket/socket.js";
+
+import router from "@/api/routes/router.routes.js";
+import Socket from "@/api/socket/socket.js";
+import { errorHandler } from "@/api/middlewares/error-handler.js";
 
 const PORT = process.env.PORT || 3000;
 
