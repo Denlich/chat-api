@@ -1,5 +1,5 @@
-import { AuthService } from "@/api/services/auth.service.js";
-import { UserService } from "@/api/services/user.service.js";
+import { AuthService } from "../services/auth.service.js";
+import { UserService } from "../services/user.service.js";
 import { NextFunction, Request, Response } from "express";
 
 export class AuthController {

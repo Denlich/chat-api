@@ -1,5 +1,6 @@
 import { Server } from "socket.io";
 import { Server as HttpServer } from "http";
+import { Socket as SocketIO } from "socket.io";
 
 class Socket {
   private server: HttpServer;
@@ -10,10 +11,14 @@ class Socket {
     this.io = new Server(server, { cors: { origin: process.env.CLIENT_URL } });
   }
 
-  initializeSocket() {
+  private initializeSocket() {
     this.io.on("connection", (socket) => {
-      console.log(socket.id);
+      socket.on("user:join", this.onJoin);
     });
+  }
+
+  private onJoin(socket: SocketIO) {
+    console.log(socket);
   }
 
   static createSocket(server: HttpServer) {

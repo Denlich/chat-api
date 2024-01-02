@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { UnauthorizedException } from "@/utils/exceptions/unauthorized.exception.js";
+import { UnauthorizedException } from "../../utils/exceptions/unauthorized.exception.js";
 import jwt from "jsonwebtoken";
 
 export const jwtTokenVerify = (

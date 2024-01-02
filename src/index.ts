@@ -3,9 +3,9 @@ import "dotenv/config.js";
 import express from "express";
 import { createServer } from "node:http";
 
-import router from "@/api/routes/router.routes.js";
-import Socket from "@/api/socket/socket.js";
-import { errorHandler } from "@/api/middlewares/error-handler.js";
+import router from "./api/routes/router.routes.js";
+import Socket from "./api/socket/socket.js";
+import { errorHandler } from "./api/middlewares/error-handler.js";
 
 const PORT = process.env.PORT || 3000;
 

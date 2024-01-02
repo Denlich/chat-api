@@ -1,6 +1,6 @@
-import { UserMapper } from "@/mappers/user.mapper.js";
-import { UserRepository } from "@/repositories/user.repository.js";
-import { UnauthorizedException } from "@/utils/exceptions/unauthorized.exception.js";
+import { UserMapper } from "../../mappers/user.mapper.js";
+import { UserRepository } from "../../repositories/user.repository.js";
+import { UnauthorizedException } from "../../utils/exceptions/unauthorized.exception.js";
 
 export class UserService {
   private userRepository: UserRepository;
