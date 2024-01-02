@@ -1,14 +1,14 @@
 import { LoginDto } from "../dtos/login.dto.js";
 import { UserDto } from "../dtos/user.dto.js";
 import { UserRepository } from "../../repositories/user.repository.js";
-import { JwtPayload } from "../../security/jwt.payload.js";
+import { JwtPayload } from "../../security/jwt-payload.js";
 import { AlreadyRegisteredException } from "../../utils/exceptions/already-registered.exception.js";
 import { InvalidEntityIdException } from "../../utils/exceptions/invalid-entity-id.exception.js";
 import { UnauthorizedException } from "../../utils/exceptions/unauthorized.exception.js";
 import { prisma } from "../../utils/prisma.server.js";
 import { User } from "@prisma/client";
 import bcrypt from "bcrypt";
-import { JwtLocalService } from "./jwt.local.service.js";
+import { JwtLocalService } from "./jwt-local.service.js";
 
 export class AuthService {
   private jwtLocalService: JwtLocalService;

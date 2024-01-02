@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { authRouter } from "./auth.routes.js";
 import { chatRouter } from "./chat.routes.js";
-import { jwtTokenVerify } from "../middlewares/jwt-token-verify.js";
+import { jwtTokenVerify } from "../middlewares/jwt-token-verify.middleware.js";
 
 const router = Router();
 

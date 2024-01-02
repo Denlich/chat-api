@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { AuthController } from "../controllers/auth.controller.js";
-import { jwtTokenVerify } from "../middlewares/jwt-token-verify.js";
+import { jwtTokenVerify } from "../middlewares/jwt-token-verify.middleware.js";
 
 const router = Router();
 const authController = new AuthController();
